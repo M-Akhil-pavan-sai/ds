@@ -1,0 +1,49 @@
+Experiment
+Make a directory named nfsshare with files aa bb cc:
+#mkdir /nfsshare
+#cd /nfsshare
+#touch aa bb cc
+#ls
+aa
+bb
+cc
+Check if the nfs-utils package is installed or not:
+#rpm –q nfs-utils (Prints a message whether package is installed or not)
+#rpm –q portmap
+To reinstall the package first remove it with the following commands:
+#servicesnfs stop
+#rpm –e nfs-utils
+#rm –rf /var/lib/nfs/xtab-------- remove
+If package is not installed then there are two ways to install:
+61
+1. Download from FTP and install
+#ping the server
+#rpm –ivhftp://192.168.0.250:/pub.RedHat/RPMS/nfs* --force –aid
+2. Install from CD
+#mount /dev/cdrom/mnt
+#cd /mnt
+#ls
+#cd Fedora
+34#cd RPMS
+#rpm –ivhnfs-utils* --force –aid
+#rpm –ivhportmap* --force –aid
+After installing the nfs-utils package create file as below:
+#vi /etc/exports
+/var/ftp/pub 192.168.0.0./24(ro,sync)
+/nfsshare 192.168.0.0.24(rw,sync)
+Note:in vi-editor write this content (/nfsshare server ipaddress and no. of systems that are connected in
+network)
+After installing services enter the command to restart
+#servicesnfs restart
+Note: execute this command twice because first it will show failed second time it will show ok.
+Access to NFS share from client:
+#mount –t nfs 10.10.12.114:/nfsshare/mnt
+Note: In client machine enter Server Ipaddress
+Note:
+1) #ping 192.168.0.3 –b
+Broadcasts the address in the network only.
+2) #ssh 192.168.0.8
+Connects the PC to another PC just like Terminal connection in Windows.
+3) In NFS all files & Directory are by default in read only mode.
+Common KVM Switch: Using a KVM switch a monitor, keyboard, and a mouse can be connected to two
+computers
